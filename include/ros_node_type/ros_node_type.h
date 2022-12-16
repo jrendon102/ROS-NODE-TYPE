@@ -14,109 +14,89 @@
 #ifndef ROS_CLASS_H
 #define ROS_CLASS_H
 
-#include <chrono>
 #include <memory>
 #include <ros/ros.h>
 
 /**
- * @brief Class to simplify creation of ROS subscriber nodes.
+ * @brief Template Class to create ROS subscriber node.
  *
- * This template class simplifies the implementation of subscriber nodes by created callback
- * functions when instantiated and returning the latest ROS message. If a ROS message is taking
- * long to arrive, or does not arrive at all, a time out can be set to determine if a message is
- * stale.
+ * This class provides a convenient way to create a ROS subscriber node that can
+ * receive messages of a specified data type. The class has a constructor that
+ * takes in the topic name and queue size for the subscriber, and a public
+ * method called `get_data` that returns the most recent message received by the
+ * subscriber.
  *
- * @tparam DataType
+ * @tparam DataType The data type of the ROS message to be subscribed to.
  */
 template <typename DataType>
 class MySubscriber
 {
-  private:
-    ros::NodeHandle _nh;
-    ros::Subscriber _sub;
-
-    // Time variables used to determine stale messages.
-    std::chrono::system_clock::time_point msg_time_stamp;
-    std::chrono::system_clock::time_point current_time;
-
-    // Pointer to store ROS msg.
-    void *newRosMsg = NULL;
-
-    /**
-     * Callback function for subscriber. Called when new ROS message is published to the specific
-     * ROS topic. The ROS message value is stored using a void pointer by first type casting the
-     * void pointer to the specific data type and then dereferenced.
-     *
-     * @tparam DataType ROS message data type.
-     * @param msg Incoming ROS message.
-     */
-    void subCallback(const typename DataType::ConstPtr &msg);
-
   public:
     /**
      * Constructor which creates a subscription to the specific ROS topic. This can be any type
      * depending on what the parameter DATATYPE is set to.
      *
-     * @tparam DataType ROS message data type.
-     * @param topic_name ROS topic name.
-     * @param queue_size Size of out going ROS message.
+     * @param[in] topic_name The name of the ROS topic.
+     * @param[in] queue_size The queue size of the message queue for the subscriber.
      */
-    MySubscriber(std::string topic_name, int queue_size);
+    MySubscriber(std::string topic_name, int queue_size)
+    {
+        // Create subscriber.
+        sub_ = nh_.subscribe(topic_name, queue_size, &MySubscriber::subCallback, this);
+    }
 
     /**
-     * Returns the latest ROS message or if message is stale, returns NULL. The time_out
-     * parameter can be set to determine if a message is stale.
+     * Returns the most recent message received by the subscriber. If the elapsed time since the
+     * last message was received exceeds the specified timeout, a null pointer is returned.
      *
-     * @param time_out Time that determines if a message is stale. If set to -1, the last message
-     * received will continue to be returned until a new message is published.
-     * @return DataType* ROS data type.
+     * @param[in] time_out The maximum elapsed time in seconds since the last
+     * message was received. Default time_out = 0.
+     *
      */
-    DataType *get_msg(int time_out);
+    DataType *get_msg(int time_out = 0)
+    {
+        if (time_out < 0)
+        {
+            ROS_WARN("Invalid timeout value: %d. (timeout < 0)", time_out);
+            return NULL;
+        }
+
+        float time_diff = (ros::Time::now() - msg_time_stamp).toSec();   // Time elapsed.
+        if (time_out != 0 && time_diff > time_out)
+        {
+            return NULL;
+        }
+
+        return (DataType *) newRosMsg;
+    }
 
     /**
      * Destroy the My Subscriber object. Deallocate void pointer to prevent memory leak once out of
      * scope.
      */
     ~MySubscriber()
-    {
-        // Deallocate void pointer.
+    {   // Deallocate DataType pointer.
         free(newRosMsg);
-    };
-};
-
-// Constructor
-template <typename DataType>
-MySubscriber<DataType>::MySubscriber(std::string topic_name, int queue_size)
-{
-    _sub = _nh.subscribe(topic_name, queue_size, &MySubscriber::subCallback, this);
-}
-
-// Callback function.
-template <typename DataType>
-void MySubscriber<DataType>::subCallback(const typename DataType::ConstPtr &msg)
-{
-
-    // Assign void pointer to incoming ROS message by allocating dynamic memory.
-    newRosMsg = new DataType;
-    *(DataType *) newRosMsg = *msg;
-
-    msg_time_stamp = std::chrono::system_clock::now();
-}
-
-// Return the latest ROS message or, if message is stale (exceeds time_out), returns NULL.
-// If time_out = -1, time_out is essentially off and returns the last received message until a  new
-// one arrives.
-// TODO: Handle integers less than -1.
-template <typename DataType>
-DataType *MySubscriber<DataType>::get_msg(int time_out)
-{
-    current_time = std::chrono::system_clock::now();
-    auto time_diff =
-        std::chrono::duration_cast<std::chrono::seconds>(current_time - msg_time_stamp).count();
-    if (time_out != -1 && time_diff > time_out)
-    {
-        newRosMsg = NULL;
     }
-    return (DataType *) newRosMsg;
-}
+
+  private:
+    ros::NodeHandle nh_;
+    ros::Subscriber sub_;
+    ros::Time msg_time_stamp;
+    void *newRosMsg = NULL;
+
+    /**
+     * Callback function for subscriber. Called when new ROS message is published to the specific
+     * ROS topic.
+     *
+     * @param[in] msg Incoming ROS message.
+     */
+    void subCallback(const typename DataType::ConstPtr &msg)
+    {
+        // Assign void pointer to incoming ROS message by allocating dynamic memory.
+        newRosMsg = new DataType;
+        *(DataType *) newRosMsg = *msg;      // Store incoming ROS message.
+        msg_time_stamp = ros::Time::now();   // Get timestamp.
+    }
+};
 #endif

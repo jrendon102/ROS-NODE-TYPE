@@ -2,7 +2,7 @@
  * @file name_pub_node.cpp
  * @author Julian Rendon (julianrendon514@gmail.com)
  * @brief Simple ROS publisher.
- * @version 0.1
+ * @version 1.0
  * @date 2022-11-12
  *
  * Publishes to /name ROS topic at a rate of 1 message per 5 seconds. Names are cycled once all
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     // Initialize publishers
     ros::Publisher name_pub = nh.advertise<std_msgs::String>("/name", 1);
 
-    // 1 messages every 5 seconds.
+    // 1 messages every 5 seconds. (Hz)
     ros::Rate loop(.20);
 
     // Names in alphabetical order.

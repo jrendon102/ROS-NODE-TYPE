@@ -2,7 +2,7 @@
  * @file number_pub_node.cpp
  * @author Julian Rendon (julianrendon514@gmail.com)
  * @brief Simple ROS publisher.
- * @version 0.1
+ * @version 1.0
  * @date 2022-11-14
  *
  * Publishes to the /number ROS topic at a rate of 1 message per second. Message starts at 0 and
@@ -19,8 +19,13 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "number_pub_node");
     ros::NodeHandle nh;
+
+    // Initialize Publisher.
     ros::Publisher number_pub = nh.advertise<std_msgs::Int32>("/number", 1);
-    ros::Rate loop(1);
+
+    // 1 message every 5 seconds. (Hz)
+    ros::Rate loop(.20);
+
     int number_start = 0;
     while (ros::ok())
     {
