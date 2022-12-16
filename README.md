@@ -1,7 +1,6 @@
 # ROS NODE TYPE
 
 ## Overview
----
 ROS NODE TYPE is a ROS package which contains a cpp library intended to simplify the implementation of ROS subscribers. The goal was to automate the mundane task of creating callback functions for every ROS topic that needs subscribing to. The MySubscriber class takes care of creating callback functions and returns the last ROS message published. The class also has the ability to determine and discard a message that is stale. This makes "synchronizing" messages possible.
 <br>
 <br>
@@ -9,7 +8,6 @@ ROS NODE TYPE is a ROS package which contains a cpp library intended to simplify
 For some additional documentation regarding the package, you can check out this [README.md](./docs/README.md) file to get started.
 
 ## Dependencies
----
 - Doxygen:
     - Used to generate helpful documentation about library. 
     - For some info on how to get started with Doxygen, you can read this [README.md](./docs/README.md) file to get started.
@@ -19,7 +17,6 @@ For some additional documentation regarding the package, you can check out this 
 ***Note**: You can modify the [CMakeLists.txt](./CMakeLists.txt), located at the top level of this repo, to remove Doxygen. 
 
 ## Example
----
 The [MySubscriber_node.cpp](./src/MySubscriber_node.cpp) utilizes the library to subscribe to two ROS topics and returns the most recent messages.
 <br>
 
@@ -43,5 +40,4 @@ To run the example use the following steps:
    ```
 
 ## Author & Maintaner
----
 Julian Rendon
