@@ -84,15 +84,15 @@ class RecentMessageSubscriber
      * @return A shared pointer to the most recent received message, or nullptr if the timeout is exceeded or an invalid
      * timeout value is provided.
      */
-    std::shared_ptr<T> GetRecentMessage(float tinmeout = 3.0)
+    std::shared_ptr<T> GetRecentMessage(float timeout = 3.0)
     {
-        if (tinmeout < 0.0)
+        if (timeout < 0.0)
         {
-            throw std::invalid_argument("Invalid timeout value: " + std::to_string(tinmeout));
+            throw std::invalid_argument("Invalid timeout value: " + std::to_string(timeout));
         }
 
         float timeDiff = (ros::Time::now() - timeStamp).toSec();
-        if (tinmeout != 0.0 && timeDiff > tinmeout)
+        if (timeout != 0.0 && timeDiff > timeout)
         {
             return nullptr;   // Message was considered stale.
         }
