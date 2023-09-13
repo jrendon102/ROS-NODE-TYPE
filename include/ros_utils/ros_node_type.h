@@ -1,9 +1,9 @@
 /**
- * @file ros_node_type.h
+ * @file ros_utils.h
  * @author  Julian Rendon (julianrendon514@gmail.com)
  * @brief ROS Library to help simplify the implementation of ROS subscriber nodes.
  *
- * The ros_node_type library can be used to create multiple subscribers of any data type. The main
+ * The ros_utils library can be used to create multiple subscribers of any data type. The main
  * functionality is to return the latest ROS message unless the message is determined to be
  * stale. It is possible to have messages "synchronized".
  *

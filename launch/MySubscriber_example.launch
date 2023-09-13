@@ -1,5 +1,5 @@
 <!-- Example to show how the MySubscriber class works. -->
 <launch>
-    <node pkg="ros_node_type" type="number_pub" name="number_pub_node" />
-    <node pkg="ros_node_type" type="MySubscriber" name="MySubscriber_node" output="screen" />
+    <node pkg="ros_utils" type="number_pub" name="number_pub_node" />
+    <node pkg="ros_utils" type="MySubscriber" name="MySubscriber_node" output="screen" />
 </launch>

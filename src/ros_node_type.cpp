@@ -1,7 +1,7 @@
 /**
- * @file ros_node_type.cpp
+ * @file ros_utils.cpp
  * @author  Julian Rendon (julianrendon514@gmail.com)
- * @brief Empty cpp file used to create ros_node_pkg library.
+ * @brief Empty cpp file used to create ros_utils library.
  * @version 0.1
  * @date 2022-11-11
  *
@@ -12,4 +12,4 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <ros_node_type/ros_node_type.h>
+#include <ros_utils/ros_utils.h>

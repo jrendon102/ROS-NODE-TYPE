@@ -1,7 +1,7 @@
 /**
  * @file MySubscriber_node.cpp
  * @author Julian Rendon (julianrendon514@gmail.com)
- * @brief Simple ROS subscriber node that utilizes the ros_node_pkg library.
+ * @brief Simple ROS subscriber node that utilizes the ros_utils library.
  * @version 1.0
  * @date 2022-11-11
  *
@@ -18,7 +18,7 @@
 
 #include <iostream>
 #include <ros/ros.h>
-#include <ros_node_type/ros_node_type.h>
+#include <ros_utils/ros_node_type.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/String.h>
 
