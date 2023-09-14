@@ -51,7 +51,9 @@ include_directories(
 )
 
 # # Declare a C++ library
-add_library(${PROJECT_NAME} INTERFACE)
+add_library(${PROJECT_NAME}
+  src/ros_utils.cpp
+)
 
 # # Declare a C++ executable
 add_executable(name_pub src/name_pub_node.cpp)
