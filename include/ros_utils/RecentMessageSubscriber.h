@@ -2,9 +2,6 @@
  * @file RecentMessageSubscriber.h
  * @brief This file defines the RecentMessageSubscriber class for subscribing to and retrieving
  *        the most recent message from a specified ROS topic.
- * @version 1.0.1
- * @date 2023-09-12
- * @author Julian Rendon
  *
  * @details This class template provides a convenient way to subscribe to a ROS topic and
  *          obtain the most recent message received on that topic. It is designed to work with
@@ -12,12 +9,20 @@
  *
  * @note This code is released under the MIT License.
  *       Copyright (c) 2023 Julian Rendon (julianrendon514@gmail.com)
+ *
+ * @version 1.0.1
+ * @date 2023-09-12
+ * @author Julian Rendon
  */
 
 #ifndef RECENT_MESSAGE_SUBSCRIBER
 #define RECENT_MESSAGE_SUBSCRIBER
 
 #include <ros/ros.h>
+#include <ros_utils/ros_exception.h>
+#include <ros_utils/ros_utils.h>
+
+using namespace RosUtils;
 
 /**
  * @brief A class for subscribing to and retrieving the most recent message of a specified ROS topic.
@@ -74,27 +79,29 @@ class RecentMessageSubscriber
     /**
      * @brief Get the most recent received message.
      *
-     * Retrieves the most recent received message, if available. Checks if it is within a specified timeout and
-     * if not, the message is considered stale.
+     * Retrieves the most recent received message, if available, and checks if it is within a specified timeout.
+     * If the message is not available or if the specified timeout is exceeded, the message is considered stale.
      *
      * @param timeout The maximum allowed time difference (in seconds) between the current time and the message
      * timestamp. A value of 0.0 means no timeout check, while a non-negative value represents the maximum allowable
      * age of the message in seconds.
      *
-     * @return A shared pointer to the most recent received message, or nullptr if the timeout is exceeded or an invalid
-     * timeout value is provided.
+     * @return A shared pointer to the most recent received message, or nullptr if the message is stale or if an
+     * invalid timeout value is provided.
+     *
+     * @throws RosUtils::RosException::InvalidParameter if an invalid timeout value is provided (timeout < 0.0).
      */
     std::shared_ptr<T> GetRecentMessage(float timeout = 3.0)
     {
         if (timeout < 0.0)
         {
-            throw std::invalid_argument("Invalid timeout value: " + std::to_string(timeout));
+            throw RosException::InvalidParameter();
         }
 
         float timeDiff = (ros::Time::now() - timeStamp).toSec();
         if (timeout != 0.0 && timeDiff > timeout)
         {
-            return nullptr;   // Message was considered stale.
+            return nullptr;   // Message is considered stale.
         }
         return rosMsg;
     }
