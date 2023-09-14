@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ros_node_type</name>
+  <name>ros_utils</name>
   <version>0.0.1</version>
-  <description>The ros_node_type package aims to simplify the implementation of ROS subscribers.</description>
+  <description>The ros_utils package aims to simplify the implementation of ROS subscribers.</description>
 
   <maintainer email="julianrendon514@gmail.com">Julian Rendon</maintainer>
   <license>MIT</license>

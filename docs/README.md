@@ -1,10 +1,13 @@
-# **DOXYGEN NOTES**
+# **DOXYGEN**
 
-### Documentation
-All documentation regarding doxygen can be found [here](https://www.doxygen.nl/manual/index.html). This includes download/installation of doxygen, how to modify doxygen configuration files to customize documentation, etc.
+## Documentation
 
-### Setting up Doxygen for CMake
-Instructions on how to setup doxygen for cmake can be found [here](https://vicrucann.github.io/tutorials/quick-cmake-doxygen/). <mark>This is only used as a template and should be modified for YOUR specific repository structure.</mark> Take a look at the [CMakelists.txt](../CMakeLists.txt) and [Doxyfile.in](./Doxyfile.in) located inside this repo to see how it was setup.
+For comprehensive documentation on Doxygen, visit the official [Doxygen Manual](https://www.doxygen.nl/manual/index.html). This resource provides information on downloading, installing, and customizing Doxygen to suit your needs.
 
-### Viewing Documenation
-You can view the documents by navigating to the ***docs/html/*** directory, located in this repository, and opening the index.html file on a web browser.
+## Setting up Doxygen for CMake
+
+To configure Doxygen for use with CMake, refer to the tutorial [here](https://vicrucann.github.io/tutorials/quick-cmake-doxygen/). Please note that this tutorial serves as a template and should be adjusted to match the structure of your specific repository. For a practical example, review the [CMakelists.txt](../CMakeLists.txt) and [Doxyfile.in](./Doxyfile.in) files in this repository to understand how it was implemented.
+
+## Viewing Documentation
+
+To access the generated documentation, navigate to the **_docs/html/_** directory within this repository and open the `index.html` file in a web browser.
