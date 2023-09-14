@@ -43,27 +43,14 @@ catkin_package(
   CATKIN_DEPENDS roscpp std_msgs
 )
 
-# # Specify additional locations of header files
-# # Your package locations should be listed before other locations
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
 
-# # Declare a C++ library
 add_library(${PROJECT_NAME}
   src/ros_utils.cpp
 )
-
-# # Declare a C++ executable
-add_executable(name_pub src/name_pub_node.cpp)
-add_executable(number_pub src/number_pub_node.cpp)
-add_executable(MySubscriber src/MySubscriber_node.cpp)
-
-# # Specify libraries to link a library or executable target against
-target_link_libraries(name_pub ${catkin_LIBRARIES})
-target_link_libraries(number_pub ${catkin_LIBRARIES})
-target_link_libraries(MySubscriber ${catkin_LIBRARIES})
 
 # # Mark libraries for installation
 # # See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
