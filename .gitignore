@@ -1,7 +1,26 @@
-
-# Directories
-devel/ 
-logs/
+# Ignore build and compile output for C++
 build/
+devel/
+install/
+
+# Ignore log and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore Visual Studio Code settings
 .vscode/
-html/
+
+# Ignore ROS workspace settings
+*.workspace
+
+# Ignore user-specific ROS configuration
+~/.ros/
+
+# Ignore Python-specific build artifacts
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Python virtual environment
+venv/
