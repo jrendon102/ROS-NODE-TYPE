@@ -11,7 +11,7 @@
  */
 #include <ros_utils/ros_utils.h>
 
-void RosUtils::ConfigureLogLevel(int argc, char **argv, ros::console::Level &loglevel)
+ros::console::Level RosUtils::ConfigureLogLevel(int argc, char **argv)
 {
     ros::console::Level logLevel = ros::console::levels::Info;
     if (argc > 1)
@@ -22,4 +22,5 @@ void RosUtils::ConfigureLogLevel(int argc, char **argv, ros::console::Level &log
             logLevel = ros::console::levels::Debug;
         }
     }
+    return logLevel;
 }

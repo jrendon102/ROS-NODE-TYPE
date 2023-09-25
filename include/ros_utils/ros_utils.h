@@ -61,8 +61,10 @@ T GetParam(const std::string &paramName)
  *
  * @param arg The argument count.
  * @param argv The argument vector.
+ *
+ * @return The ROS log level
  */
-void ConfigureLogLevel(int arg, char **argv, ros::console::Level &logLevel);
+ros::console::Level ConfigureLogLevel(int arg, char **argv);
 
 }   // namespace RosUtils
 
