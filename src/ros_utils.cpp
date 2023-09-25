@@ -11,17 +11,15 @@
  */
 #include <ros_utils/ros_utils.h>
 
-void RosUtils::ConfigureLogLevel(int argc, char **argv)
+void RosUtils::ConfigureLogLevel(int argc, char **argv, ros::console::Level &loglevel)
 {
     ros::console::Level logLevel = ros::console::levels::Info;
     if (argc > 1)
     {
         std::string logLevelArg = argv[1];
-        if (logLevelArg == "--debg")
+        if (logLevelArg == "--debug")
         {
             logLevel = ros::console::levels::Debug;
         }
     }
-
-    ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, logLevel);
 }

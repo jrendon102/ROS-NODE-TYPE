@@ -17,36 +17,39 @@
 #define ROS_UTILS_H
 
 #include <ros/ros.h>
-#include <ros_utils/ros_exception.h>
 
 namespace RosUtils
 {
 
 /**
- * @brief Template function to retrieve a parameter's value from the ROS parameter server.
+ * @brief Template function to retrieve a parameter's() value from the ROS parameter server.
  *
- * This function attempts to retrieve a parameter's value from the ROS parameter server.
+ * This function attempts to retrieve a parameter's() value from the ROS parameter server.
  * If the parameter exists, its value is returned; otherwise, appropriate exceptions are thrown.
  *
  * @tparam T The data type of the parameter.
  * @param paramName The name of the ROS parameter to retrieve.
  * @return The value of the specified ROS parameter.
  *
- * @throws RosException::InvalidParameter if the parameter exists but is of an incompatible type.
- * @throws RosException::ParameterNotFound if the parameter does not exist.
+ * @throws `ros::InvalidParameterException` - if the parameter exists but is of an incompatible type
+ *         or if the parameter does not exist.
  */
 template <typename T>
-T GetParams(const std::string &paramName)
+T GetParam(const std::string &paramName)
 {
+    ROS_DEBUG("%s()::Fetching camera parameter:[%s]", __func__, paramName.c_str());
     T value;
     if (!ros::param::get(paramName, value))
     {
         if (ros::param::has(paramName))
         {
-            throw RosException::InvalidParameter();
+            ROS_ERROR("%s()::Failed to retrieve parameter:[%s]", __func__, paramName.c_str());
+            throw ros::InvalidParameterException("invalid parameter type");
         }
-        throw RosException::ParameterNotFound();
+        ROS_ERROR("%s()::Failed to retrieve parameter:[%s]", __func__, paramName.c_str());
+        throw ros::InvalidParameterException("parameter not found");
     }
+    ROS_DEBUG("%s()::Success.", __func__);
     return value;
 }
 
@@ -59,7 +62,7 @@ T GetParams(const std::string &paramName)
  * @param arg The argument count.
  * @param argv The argument vector.
  */
-void ConfigureLogLevel(int arg, char **argv);
+void ConfigureLogLevel(int arg, char **argv, ros::console::Level &logLevel);
 
 }   // namespace RosUtils
 
