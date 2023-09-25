@@ -4,7 +4,7 @@ project(ros_utils)
 # # Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  std_msgs
+  rospy
 )
 
 # ######################
@@ -37,10 +37,12 @@ endif(DOXYGEN_FOUND)
 # # Add this to debug ros node in VScode.
 set(CMAKE_BUILD_TYPE Debug)
 
+catkin_python_setup()
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ros_utils
-  CATKIN_DEPENDS roscpp std_msgs
+  CATKIN_DEPENDS roscpp rospy
 )
 
 include_directories(

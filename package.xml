@@ -1,21 +1,16 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>ros_utils</name>
-  <version>0.0.1</version>
-  <description>The ros_utils package aims to simplify the implementation of ROS subscribers.</description>
-
-  <maintainer email="julianrendon514@gmail.com">Julian Rendon</maintainer>
+  <version>1.0.0</version>
+  <description>The ros_utils package is a versatile utility package for ROS development.</description>
+  <maintainer email="julianrendon514@gmail.com">Julian A Rendon</maintainer>
   <license>MIT</license>
-  <author email="julianrendon514@gmail.com">Julian Rendon</author>
-
+  <author email="julianrendon514@gmail.com">Julian A Rendon</author>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>std_msgs</build_depend>
+  <build_depend>rospy</build_depend>
   <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
   <exec_depend>roscpp</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <export>
-
-  </export>
+  <exec_depend>rospy</exec_depend>
 </package>
